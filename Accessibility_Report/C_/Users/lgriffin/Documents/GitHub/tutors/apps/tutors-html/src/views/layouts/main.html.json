@@ -1,0 +1,131 @@
+{
+    "results": [
+        {
+            "ruleId": "WCAG20_Html_HasLang",
+            "value": [
+                "VIOLATION",
+                "FAIL"
+            ],
+            "path": {
+                "dom": "/html[1]",
+                "aria": "/document[1]"
+            },
+            "ruleTime": 0,
+            "reasonId": "Fail_3",
+            "message": "WCAG20_Html_HasLang",
+            "messageArgs": [],
+            "apiArgs": [],
+            "bounds": {
+                "left": 0,
+                "top": 0,
+                "height": 600,
+                "width": 800
+            },
+            "snippet": "<html>",
+            "category": "Accessibility",
+            "ignored": false,
+            "level": "violation"
+        },
+        {
+            "ruleId": "WCAG20_Body_FirstASkips_Native_Host_Sematics",
+            "value": [
+                "VIOLATION",
+                "FAIL"
+            ],
+            "path": {
+                "dom": "/html[1]/body[1]",
+                "aria": "/document[1]"
+            },
+            "ruleTime": 0,
+            "reasonId": "Fail_1",
+            "message": "WCAG20_Body_FirstASkips_Native_Host_Sematics",
+            "messageArgs": [],
+            "apiArgs": [],
+            "bounds": {
+                "left": 0,
+                "top": 0,
+                "height": 600,
+                "width": 800
+            },
+            "snippet": "<body>",
+            "category": "Accessibility",
+            "ignored": false,
+            "level": "violation"
+        },
+        {
+            "ruleId": "RPT_Style_ColorSemantics1",
+            "value": [
+                "VIOLATION",
+                "POTENTIAL"
+            ],
+            "path": {
+                "dom": "/html[1]/head[1]/style[1]",
+                "aria": "/document[1]"
+            },
+            "ruleTime": 0,
+            "reasonId": "Potential_1",
+            "message": "RPT_Style_ColorSemantics1",
+            "messageArgs": [],
+            "apiArgs": [],
+            "bounds": {
+                "left": 0,
+                "top": 0,
+                "height": 0,
+                "width": 0
+            },
+            "snippet": "<style>",
+            "category": "Accessibility",
+            "ignored": false,
+            "level": "potentialviolation"
+        },
+        {
+            "ruleId": "RPT_Html_SkipNav",
+            "value": [
+                "VIOLATION",
+                "POTENTIAL"
+            ],
+            "path": {
+                "dom": "/html[1]",
+                "aria": "/document[1]"
+            },
+            "ruleTime": 0,
+            "reasonId": "Potential_1",
+            "message": "RPT_Html_SkipNav",
+            "messageArgs": [],
+            "apiArgs": [],
+            "bounds": {
+                "left": 0,
+                "top": 0,
+                "height": 600,
+                "width": 800
+            },
+            "snippet": "<html>",
+            "category": "Accessibility",
+            "ignored": false,
+            "level": "potentialviolation"
+        }
+    ],
+    "numExecuted": 140,
+    "nls": {},
+    "summary": {
+        "counts": {
+            "violation": 2,
+            "potentialviolation": 2,
+            "ignored": 0
+        },
+        "scanTime": 29,
+        "ruleArchive": "Latest Deployment (latest)",
+        "policies": [
+            "IBM_Accessibility"
+        ],
+        "reportLevels": [
+            "violation",
+            "potentialviolation"
+        ],
+        "startScan": 1665148927779,
+        "URL": "file:///C:/Users/lgriffin/Documents/GitHub/tutors/apps/tutors-html/src/views/layouts/main.html"
+    },
+    "scanID": "43f183db-fe1c-441a-9ec7-572a8afed888",
+    "toolID": "accessibility-checker-v3.1.38",
+    "label": "C_\\Users\\lgriffin\\Documents\\GitHub\\tutors\\apps\\tutors-html\\src\\views\\layouts\\main.html"
+}
