@@ -1,0 +1,36 @@
+{% from "components/navigators/MainNavigator.njk" import mainNavigator %}
+{% extends "layouts/main.html" %}
+
+{% block content %}
+  {{ mainNavigator(lo) }}
+  <div class="prose xl:max-w-4xl 2xl:max-w-5xl mx-auto p-2 m-2">
+    <h1 class="text-3xl font-bold mb-4">{{ lo.title }}</h1>
+    
+    <div class="bg-blue-50 border border-blue-200 rounded p-4 mb-6">
+      <h2 class="text-lg font-semibold mb-2">🔧 Debug Information</h2>
+      <p><strong>Type:</strong> {{ lo.type }}</p>
+      <p><strong>ID:</strong> {{ lo.id }}</p>
+      <p><strong>Route:</strong> {{ lo.route }}</p>
+      <p><strong>Notebook File:</strong> {{ lo.notebookFile }}</p>
+      <p><strong>Has Content:</strong> {{ lo.notebookContent | length > 0 }}</p>
+    </div>
+
+    <div class="bg-gray-100 border rounded p-4">
+      <h2 class="text-lg font-semibold mb-2">📓 Notebook Content</h2>
+      <p>This is a placeholder for the notebook. JupyterLite integration will be added once basic rendering works.</p>
+      
+      {% if lo.notebookContent %}
+      <div class="mt-4">
+        <h3 class="font-semibold">Raw Notebook Data:</h3>
+        <pre class="bg-white p-2 rounded text-sm overflow-x-auto">{{ lo.notebookContent | truncate(200) }}</pre>
+      </div>
+      {% endif %}
+    </div>
+    
+    {% if lo.contentHtml %}
+    <div class="mt-6">
+      {{ lo.contentHtml | safe }}
+    </div>
+    {% endif %}
+  </div>
+{% endblock %} 

@@ -1,5 +1,5 @@
 export const imageTypes = ["png", "jpg", "jpeg", "gif", "PNG", "JPG", "JPEG", "GIF"];
-export const assetTypes = imageTypes.concat(["pdf", "zip", "html", "htm", "yaml", "xls", "xlsx", "xlsm", "csv", "pkt", "css", "kt", "json", "java", "py", "js"]);
+export const assetTypes = imageTypes.concat(["pdf", "zip", "html", "htm", "yaml", "xls", "xlsx", "xlsm", "csv", "pkt", "css", "kt", "json", "java", "py", "js", "ipynb"]);
 
 export type WeekType = {
   title: string;
@@ -133,6 +133,12 @@ export type PanelVideo = Lo & {
   type: "panelvideo";
 };
 
+export type Notebook = Lo & {
+  type: "notebook";
+  notebookFile: string; // path to the .ipynb file
+  notebookContent: string; // JSON content of the notebook
+};
+
 export type Panels = {
   panelVideos: Lo[];
   panelTalks: Lo[];
@@ -188,7 +194,7 @@ export type Course = Composite & {
   wallBar: IconNavBar;
 };
 
-export const simpleTypes = ["note", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk", "book", "lab"];
+export const simpleTypes = ["notebook", "panelnote", "paneltalk", "panelvideo", "note", "archive", "web", "github", "talk", "book", "lab"];
 export const loCompositeTypes = ["unit", "side", "topic", "course"];
 export const loTypes = simpleTypes.concat(loCompositeTypes);
 export type LoType = (typeof loTypes)[number];
@@ -201,14 +207,15 @@ export const preOrder = new Map([
   ["side", 2],
   ["talk", 3],
   ["lab", 4],
-  ["note", 5],
-  ["web", 6],
-  ["github", 7],
-  ["panelnote", 8],
-  ["paneltalk", 9],
-  ["archive", 10],
-  ["panelvideo", 11],
-  ["topic", 12],
-  ["unknown", 13],
+  ["notebook", 5],
+  ["note", 6],
+  ["web", 7],
+  ["github", 8],
+  ["panelnote", 9],
+  ["paneltalk", 10],
+  ["archive", 11],
+  ["panelvideo", 12],
+  ["topic", 13],
+  ["unknown", 14],
   ["", 0],
 ]);

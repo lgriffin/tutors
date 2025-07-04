@@ -9,6 +9,7 @@ import {
   getLabImage,
   getLabImageFile,
   getMarkdown,
+  getNotebookFile,
   getPdf,
   getPdfFile,
   getRoute,
@@ -17,7 +18,7 @@ import {
   readVideoIds,
   removeLeadingHashes,
 } from "./lr-utils";
-import { Course, Lo, preOrder, LearningResource, Talk, Archive, Lab, isCompositeLo, Composite } from "../models/lo-types";
+import { Course, Lo, preOrder, LearningResource, Talk, Archive, Lab, Notebook, isCompositeLo, Composite } from "../models/lo-types";
 import { readWholeFile, readYamlFile } from "./file-utils";
 import fm from "front-matter";
 
@@ -33,6 +34,12 @@ function buildTalk(lo: Lo, lr: LearningResource) {
 function buildArchive(lo: Lo, lr: LearningResource) {
   const archive = lo as Archive;
   archive.archiveFile = getArchiveFile(lr);
+}
+
+function buildNotebook(lo: Lo, lr: LearningResource) {
+  const notebook = lo as Notebook;
+  notebook.notebookFile = getNotebookFile(lr);
+  notebook.notebookContent = ""; // This will be populated when the HTML is generated
 }
 
 function buildPanelvideo(lo: Lo) {
@@ -105,6 +112,9 @@ function buildSimpleLo(lo: Lo, lr: LearningResource): Lo {
       break;
     case "archive":
       buildArchive(lo, lr);
+      break;
+    case "notebook":
+      buildNotebook(lo, lr);
       break;
     default:
   }

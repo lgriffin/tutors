@@ -122,6 +122,11 @@ export function getPdfFile(lr: LearningResource): string {
   return pdfFile.replace(/^.*[\\\/]/, "");
 }
 
+export function getNotebookFile(lr: LearningResource): string {
+  let notebookFile = getFileWithType(lr, ["ipynb"]);
+  return notebookFile.replace(/^.*[\\\/]/, "");
+}
+
 export function getVideo(lr: LearningResource, id: string): string {
   let videoId = "";
   if (id) {
