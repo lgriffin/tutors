@@ -13,7 +13,8 @@ export const LAYOUT_REFERENCE_JSON = resolve(Deno.cwd(), "../test/fixtures/layou
 export const FIXTURES = resolve(Deno.cwd(), "../test/fixtures");
 export const TEST_FOLDER = `${rootPath}/temp`;
 
-const localVentoTemplates = "/Users/edeleastar/repos/tutor-sdk/apps/tutors-apps/cli/tutors-gen-lib/src/templates/vento";
+// Auto-detect vento templates path
+const localVentoTemplates = resolve(Deno.cwd(), "./src/templates/vento");
 
 export async function generateHtml(path: string): Promise<boolean> {
   const [course, lr] = await parseCourse(path, true);
