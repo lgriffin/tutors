@@ -1,7 +1,7 @@
 
 import { assert, assertEquals } from "jsr:@std/assert";
 import { exists } from "jsr:@std/fs";
-import { relative } from "jsr:@std/path";
+import { relative, basename } from "jsr:@std/path";
 
 export interface FileStructure {
   type: "file" | "directory";
@@ -74,13 +74,13 @@ export interface FileStructure {
       for (let i = 0; i < sortedRefChildren.length; i++) {
         const refChild = sortedRefChildren[i];
         const genChild = sortedGenChildren[i];
-        const refName = relative(".", refChild.path).split("/").pop();
-        const genName = relative(".", genChild.path).split("/").pop();
+        const refName = basename(refChild.path);
+        const genName = basename(genChild.path);
         
         assertEquals(
           genName,
           refName,
-          `File name mismatch in directory ${relative(".", generated.path)}`
+          `File name mismatch in directory ${relative(".", generated.path)}: expected ${refName}, got ${genName}`
         );
 
         await compareDirectoryContents(genChild, refChild);

@@ -65,8 +65,38 @@ export class TutorsTestHarness {
       
       // Build file structures
       const generatedPath = `${TEST_FOLDER}/${courseName}/${outputType}`;
-      const referenceName = outputType === "html" ? "reference-html" : `${courseName}-json`;
+      
+      // Map course names to their reference output fixtures
+      // Note: fixture names don't always include the word "course"
+      let referenceName: string;
+      if (outputType === "html") {
+        // For HTML output
+        if (courseName === "reference-course") {
+          referenceName = "reference-html";
+        } else if (courseName === "layout-reference-course") {
+          referenceName = "layout-reference-html"; // May not exist yet
+        } else {
+          referenceName = `${courseName}-html`;
+        }
+      } else {
+        // For JSON output
+        if (courseName === "layout-reference-course") {
+          referenceName = "layout-reference-json"; // Note: no "course" in name
+        } else {
+          referenceName = `${courseName}-json`;
+        }
+      }
+      
       const referencePath = `${FIXTURES}/${referenceName}`;
+      
+      // Check if reference exists
+      if (!(await exists(referencePath))) {
+        return {
+          passed: false,
+          message: `Reference fixture not found: ${referenceName}`,
+          details: `Expected reference output at: ${referencePath}\nYou may need to generate this reference output first.`,
+        };
+      }
       
       const generatedStructure = await buildFileStructure(generatedPath);
       const referenceStructure = await buildFileStructure(referencePath);
