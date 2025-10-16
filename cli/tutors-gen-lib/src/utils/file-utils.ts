@@ -123,9 +123,21 @@ export function copyFolder(src: string, dest: string): void {
     
     const stats = fs.statSync(src);
     if (stats.isDirectory()) {
-      // Create destination directory and copy contents
+      // Create destination directory
       fs.mkdirSync(dest, { recursive: true });
-      fs.cpSync(src, dest, { recursive: true });
+      
+      // Copy CONTENTS of src to dest (not src folder itself)
+      const entries = fs.readdirSync(src, { withFileTypes: true });
+      for (const entry of entries) {
+        const srcPath = path.join(src, entry.name);
+        const destPath = path.join(dest, entry.name);
+        
+        if (entry.isDirectory()) {
+          copyFolder(srcPath, destPath);
+        } else {
+          fs.copyFileSync(srcPath, destPath);
+        }
+      }
     } else {
       // For single file, ensure parent directory exists
       fs.mkdirSync(path.dirname(dest), { recursive: true });

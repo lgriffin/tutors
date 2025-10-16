@@ -60,6 +60,7 @@ async function downloadFile(filePath: string) {
 
 export async function downloadVentoTemplates(folder: string, srcVentoFolder: string = "") {
   if (srcVentoFolder) {
+    // Copy contents of srcVentoFolder to folder/vento (not the folder itself)
     copyFolder(srcVentoFolder, `${folder}/vento`);
     return;
   }
