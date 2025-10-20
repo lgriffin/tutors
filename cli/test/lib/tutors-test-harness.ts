@@ -54,7 +54,7 @@ export class TutorsTestHarness {
       // Generate output
       const result = outputType === "html" 
         ? await tutorsPublishHtml(courseName)
-        : tutorsPublishJson(courseName);
+        : await tutorsPublishJson(courseName);
       
       if (!result) {
         return {

@@ -69,6 +69,9 @@ export function generateLlmsByTopic(course: Course, folder: string) {
 }
 
 export function generateLlms(course: Course, folder: string) {
+  // Defensive programming: handle missing properties
+  if (!course.properties) return;
+  
   const llm = course.properties.llm as unknown as number;
   if (llm === 0 || llm === undefined) return;
 

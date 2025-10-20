@@ -6,6 +6,7 @@ parent: course/tutors-reference-manual
 
 auth: 0
 labStepsAutoNumber: false
+llm: 0  # Disable LLM generation for this test course
 
 ignorepin: 4321
 ignore:

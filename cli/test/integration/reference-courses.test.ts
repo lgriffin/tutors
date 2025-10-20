@@ -36,14 +36,9 @@ Deno.test("Reference Course: reference-course (HTML)", async () => {
  * 
  * Tests JSON generation (for dynamic Tutors reader).
  * Validates course structure, metadata, LO hierarchy.
- * 
- * KNOWN BUG: llms.ts:72 tries to access course.properties.llm without null check
- * This causes: TypeError: Cannot read properties of undefined (reading 'llm')
- * FIX: Add null check for course.properties in generateLlms()
  */
 Deno.test({
   name: "Reference Course: layout-reference-course (JSON)",
-  ignore: true,  // TODO: Fix null check in tutors-gen-lib/src/utils/llms.ts:71
   sanitizeResources: false,
   sanitizeOps: false,
   async fn() {
