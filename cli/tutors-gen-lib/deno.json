@@ -4,13 +4,12 @@
   "exports": "./src/tutors.ts",
   "license": "MIT",
   "tasks": {
-    "test": "deno test ../test/unit/*.test.ts ../test/integration/*.test.ts --allow-all",
-    "test:unit": "deno test ../test/unit/*.test.ts --allow-all",
-    "test:integration": "deno test ../test/integration/*.test.ts --allow-all",
-    "test:cli": "deno test ../test/integration/cli-execution.test.ts --allow-all",
-    "test:reference": "deno test ../test/integration/reference-courses.test.ts --allow-all",
-    "test:coverage": "deno test ../test/unit/*.test.ts ../test/integration/*.test.ts --coverage=coverage --allow-all && deno coverage coverage",
-    "test:coverage:html": "deno test ../test/unit/*.test.ts ../test/integration/*.test.ts --coverage=coverage --allow-all && deno coverage coverage --html"
+    "test": "cd ../test && deno task test",
+    "test:unit": "cd ../test && deno task test:unit",
+    "test:integration": "cd ../test && deno task test:integration",
+    "test:cli": "cd ../test && deno task test:cli",
+    "test:reference": "cd ../test && deno task test:reference",
+    "test:coverage": "cd ../test && deno task test:coverage"
   },
   "imports": {
     "@tutors/tutors-model-lib": "jsr:@tutors/tutors-model-lib@^4",

@@ -1,0 +1,22 @@
+{
+  "name": "@tutors/tests",
+  "tasks": {
+    "test": "deno test unit/*.test.ts integration/*.test.ts --allow-all",
+    "test:unit": "deno test unit/*.test.ts --allow-all",
+    "test:integration": "deno test integration/*.test.ts --allow-all",
+    "test:cli": "deno test integration/cli-execution.test.ts --allow-all",
+    "test:reference": "deno test integration/reference-courses.test.ts --allow-all",
+    "test:error": "deno test integration/error-states.test.ts --allow-all",
+    "test:sequential": "deno test unit/*.test.ts integration/*.test.ts --allow-all --jobs=1",
+    "test:coverage": "deno test unit/*.test.ts integration/*.test.ts --coverage=coverage --allow-all && deno coverage coverage",
+    "test:coverage:html": "deno test unit/*.test.ts integration/*.test.ts --coverage=coverage --allow-all && deno coverage coverage --html"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@^1",
+    "@std/path": "jsr:@std/path@^1",
+    "@std/fs": "jsr:@std/fs@^1",
+    "@tutors/tutors-gen-lib": "../tutors-gen-lib/src/tutors.ts",
+    "@tutors/tutors-model-lib": "jsr:@tutors/tutors-model-lib@^4"
+  }
+}
+
