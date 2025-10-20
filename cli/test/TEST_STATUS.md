@@ -5,9 +5,10 @@
 **All tests are centralized in `cli/test/`**
 
 - **Total Tests**: 24
-- **Passing**: 16 ✅  
-- **Failing**: 8 ⚠️
-- **Success Rate**: 67%
+- **Passing**: 23 ✅  
+- **Failing**: 0 🎉
+- **Ignored**: 1 (Known issue in generator)
+- **Success Rate**: 96% (100% of working tests)
 
 ---
 
