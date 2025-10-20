@@ -5,16 +5,16 @@ import { exists } from "jsr:@std/fs/exists";
 
 const rootPath = Deno.cwd();
 
-export const REFERENCE_COURSE = resolve(Deno.cwd(), "../test/fixtures/reference-course");
-export const REFERENCE_HTML = resolve(Deno.cwd(), "../test/fixtures/reference-html");
-export const LAYOUT_REFERENCE_COURSE = resolve(Deno.cwd(), "../test/fixtures/layout-reference-course");
-export const LAYOUT_REFERENCE_JSON = resolve(Deno.cwd(), "../test/fixtures/layout-reference-json");
+export const REFERENCE_COURSE = resolve(Deno.cwd(), "./fixtures/reference-course");
+export const REFERENCE_HTML = resolve(Deno.cwd(), "./fixtures/reference-html");
+export const LAYOUT_REFERENCE_COURSE = resolve(Deno.cwd(), "./fixtures/layout-reference-course");
+export const LAYOUT_REFERENCE_JSON = resolve(Deno.cwd(), "./fixtures/layout-reference-json");
 
-export const FIXTURES = resolve(Deno.cwd(), "../test/fixtures");
+export const FIXTURES = resolve(Deno.cwd(), "./fixtures");
 export const TEST_FOLDER = `${rootPath}/temp`;
 
-// Auto-detect vento templates path
-const localVentoTemplates = resolve(Deno.cwd(), "./src/templates/vento");
+// Auto-detect vento templates path - relative to test directory
+const localVentoTemplates = resolve(Deno.cwd(), "../tutors-gen-lib/src/templates/vento");
 
 export async function generateHtml(path: string): Promise<boolean> {
   const [course, lr] = await parseCourse(path, true);
@@ -31,17 +31,25 @@ export function generateJson(path: string): boolean {
 }
 
 export async function tutorsPublishHtml(courseId: string): Promise<boolean> {
-  await removeTmpDir(`${TEST_FOLDER}/${courseId}`);
+  try {
+    await removeTmpDir(`${TEST_FOLDER}/${courseId}`);
+  } catch {
+    // Ignore cleanup errors
+  }
   await createTempDir(`${TEST_FOLDER}/${courseId}`);
   await copyDir(`${FIXTURES}/${courseId}`, `${TEST_FOLDER}/${courseId}`);
   return await generateHtml(`${TEST_FOLDER}/${courseId}`);
 }
 
 export async function tutorsPublishJson(courseId: string): Promise<boolean> {
-  await removeTmpDir(`${TEST_FOLDER}/${courseId}`);
+  try {
+    await removeTmpDir(`${TEST_FOLDER}/${courseId}`);
+  } catch {
+    // Ignore cleanup errors
+  }
   await createTempDir(`${TEST_FOLDER}/${courseId}`);
   await copyDir(`${FIXTURES}/${courseId}`, `${TEST_FOLDER}/${courseId}`);
-  return await generateJson(`${TEST_FOLDER}/${courseId}`);
+  return generateJson(`${TEST_FOLDER}/${courseId}`);
 }
 
 // Mock the main module functionality for testing

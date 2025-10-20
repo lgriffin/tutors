@@ -108,16 +108,42 @@ export async function removeTmpDir(dirName: string): Promise<void> {
  * Copies a directory recursively
  */
 export async function copyDir(src: string, dest: string): Promise<void> {
-  await Deno.mkdir(dest, { recursive: true });
+  try {
+    await Deno.mkdir(dest, { recursive: true });
+  } catch {
+    // Directory might already exist
+  }
   
+  const entries: { isDirectory: boolean; path: string; relativePath: string; destPath: string }[] = [];
+  
+  // Collect all entries first
   for await (const entry of walk(src)) {
     const relativePath = relative(src, entry.path);
     const destPath = join(dest, relativePath);
-    
+    entries.push({ isDirectory: entry.isDirectory, path: entry.path, relativePath, destPath });
+  }
+  
+  // Create directories first
+  for (const entry of entries) {
     if (entry.isDirectory) {
-      await Deno.mkdir(destPath, { recursive: true });
-    } else {
-      await Deno.copyFile(entry.path, destPath);
+      try {
+        await Deno.mkdir(entry.destPath, { recursive: true });
+      } catch {
+        // Directory might already exist
+      }
+    }
+  }
+  
+  // Copy files
+  for (const entry of entries) {
+    if (!entry.isDirectory) {
+      try {
+        await Deno.copyFile(entry.path, entry.destPath);
+      } catch (e) {
+        // File might be in use, skip it
+        const message = e instanceof Error ? e.message : String(e);
+        console.warn(`Warning: Could not copy ${entry.path}: ${message}`);
+      }
     }
   }
 }

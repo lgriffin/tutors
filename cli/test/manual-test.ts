@@ -15,16 +15,16 @@ try {
   console.log("\n📁 Checking paths...");
   console.log(`  Current directory: ${Deno.cwd()}`);
   
-  const fixturePath = "../test/fixtures/layout-reference-course";
+  const fixturePath = "./fixtures/layout-reference-course";
   const fixtureExists = await exists(fixturePath);
   console.log(`  Fixture exists: ${fixtureExists ? "✅" : "❌"} (${fixturePath})`);
   
-  const ventoPath = "./src/templates/vento";
+  const ventoPath = "../tutors-gen-lib/src/templates/vento";
   const ventoExists = await exists(ventoPath);
   console.log(`  Vento templates: ${ventoExists ? "✅" : "❌"} (${ventoPath})`);
   
   if (!fixtureExists || !ventoExists) {
-    console.log("\n❌ Required paths not found. Run from cli/tutors-gen-lib/");
+    console.log("\n❌ Required paths not found. Run from cli/test/");
     Deno.exit(1);
   }
   
