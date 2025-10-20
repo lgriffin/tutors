@@ -1,0 +1,49 @@
+name: Quick Check
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  quick-test:
+    name: Quick Test (Ubuntu)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Cache Deno dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/deno
+            ~/.deno
+          key: ubuntu-deno-${{ hashFiles('**/deno.lock') }}
+          restore-keys: |
+            ubuntu-deno-
+
+      - name: Run lint check
+        working-directory: cli/tutors-gen-lib
+        run: deno fmt --check
+
+      - name: Run unit tests (fast)
+        working-directory: cli/tutors-gen-lib
+        run: deno task test:unit
+
+      - name: Run reference course tests (smoke test)
+        working-directory: cli/tutors-gen-lib
+        run: deno task test:reference
+
+      - name: Test summary
+        if: success()
+        run: echo "✅ Quick checks passed - full CI will run on PR"
+

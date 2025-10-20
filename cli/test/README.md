@@ -1,5 +1,8 @@
 # Tutors CLI Test Suite
 
+[![Test Suite](https://github.com/tutors-sdk/tutors-apps/actions/workflows/test.yml/badge.svg)](https://github.com/tutors-sdk/tutors-apps/actions/workflows/test.yml)
+[![Quick Check](https://github.com/tutors-sdk/tutors-apps/actions/workflows/quick-check.yml/badge.svg)](https://github.com/tutors-sdk/tutors-apps/actions/workflows/quick-check.yml)
+
 **Centralized testing for all Tutors CLI tools**
 
 ## 🏗️ Architecture: Deep Module Pattern
@@ -78,6 +81,83 @@ deno task test:coverage:html    # HTML report
 cd cli/test
 deno run --allow-all debug/manual-test.ts
 ```
+
+---
+
+## 🔄 CI/CD Integration
+
+### **Automated Testing on Every PR**
+
+Two GitHub Actions workflows run automatically:
+
+#### **1. Full Test Suite** (`test.yml`)
+
+**Triggers**: PRs to `main`/`master`, pushes to `main`/`master`/`testing_strategy`
+
+**What it does**:
+- ✅ Runs on **3 platforms** (Ubuntu, Windows, macOS)
+- ✅ Executes **all test suites** (unit, integration, CLI)
+- ✅ Generates **coverage reports** (Ubuntu only)
+- ✅ Uploads coverage to Codecov
+- ✅ Fails if any test fails on any platform
+
+**Runtime**: ~5-8 minutes (parallel across platforms)
+
+#### **2. Quick Check** (`quick-check.yml`)
+
+**Triggers**: All pushes to feature branches, all PRs
+
+**What it does**:
+- ✅ Fast feedback loop (Ubuntu only)
+- ✅ Lint check
+- ✅ Unit tests
+- ✅ Reference course smoke tests
+- ✅ Runs in ~2-3 minutes
+
+**Purpose**: Catch issues early before full CI runs
+
+### **PR Workflow**
+
+```
+1. Push to feature branch
+   └─> Quick Check runs (2-3 min)
+       ├─> ✅ Pass: continue development
+       └─> ❌ Fail: fix before opening PR
+
+2. Open PR to main
+   └─> Full Test Suite runs (5-8 min)
+       ├─> Tests on Ubuntu, Windows, macOS
+       ├─> Coverage report generated
+       └─> PR requires passing tests to merge
+
+3. Merge to main
+   └─> Full Test Suite runs again
+       └─> Validates main branch health
+```
+
+### **Viewing Test Results**
+
+- **Status badges** at top of this README show current state
+- **Actions tab** on GitHub shows detailed logs
+- **PR checks** show pass/fail status per workflow
+- **Coverage reports** uploaded to Codecov (linked in PR)
+
+### **Local Testing Before PR**
+
+Before opening a PR, run:
+
+```bash
+# Quick validation (same as CI quick check)
+cd cli/tutors-gen-lib
+deno fmt --check      # Lint
+deno task test:unit   # Unit tests
+deno task test:reference  # Smoke test
+
+# Full validation (same as CI full suite)
+deno task test        # All tests
+```
+
+This ensures CI will pass, saving time.
 
 ---
 
@@ -312,19 +392,6 @@ deno task test:reference
 ✅ **Regression Protection**: Changes are immediately visible  
 ✅ **Community Benefit**: Reference courses help educators  
 ✅ **Low Maintenance**: Reuse existing, maintained examples  
-
-### **Trade-offs**
-
-❌ **Larger Fixtures**: ~500 files vs. minimal 10-file examples  
-**Mitigation**: Storage is cheap, realism is valuable
-
-❌ **Slower Tests**: 20s vs. 5s for synthetic courses  
-**Mitigation**: Still fast enough for rapid development (< 30s)
-
-❌ **External Dependency**: Rely on reference course repo  
-**Mitigation**: Copy into test fixtures (not dynamic dependency)
-
----
 
 ## ✅ What's Tested
 
