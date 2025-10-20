@@ -75,8 +75,8 @@ deno task test:coverage:html    # HTML report
 
 ### **Manual Diagnostic Test**
 ```bash
-cd cli/tutors-gen-lib
-deno run --allow-all ../test/manual-test.ts
+cd cli/test
+deno run --allow-all debug/manual-test.ts
 ```
 
 ---
@@ -98,15 +98,22 @@ Tests the ACTUAL CLI commands as invoked by users:
 
 ---
 
-### **2. Reference Courses** (Integration)
-**File**: `integration/reference-courses.test.ts`
+### **2. Courses & Structures** (Integration)
+**File**: `integration/courses.test.ts`
 
-Full DOM comparison against known-good reference outputs:
-- `reference-course` → HTML
+Tests both reference courses and structural patterns:
+
+**Reference Courses** (against known-good output):
+- `reference-course` → HTML (all LO types)
 - `layout-reference-course` → JSON
-- `layout-reference-course` → HTML
+- `layout-reference-course` → HTML (complex nesting)
 
-**Coverage**: Comprehensive - all learning object types and structures
+**Structure Tests** (organization validation):
+- Linear with nested topics
+- All learning object types
+- Side units and panels
+
+**Coverage**: Comprehensive - 5 tests covering all major course patterns
 
 ---
 
