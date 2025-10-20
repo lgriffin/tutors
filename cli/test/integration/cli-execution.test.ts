@@ -49,9 +49,31 @@ async function runCli(
 /**
  * Test: tutors CLI (JSON generation)
  * 
- * Run: deno run -A cli/tutors/main.ts
- * From: reference-course directory
- * Verify: tutors.json generated correctly
+ * THE MOST IMPORTANT TEST: Runs the actual CLI command.
+ * 
+ * What it does:
+ * 1. Copies reference-course to a temp directory
+ * 2. cd into that directory
+ * 3. Runs: deno run -A cli/tutors/main.ts
+ * 4. Verifies JSON output was created
+ * 
+ * What it tests:
+ * - CLI argument parsing and execution
+ * - Complete JSON generation workflow
+ * - tutors.json file creation
+ * - Course metadata extraction
+ * - Learning object hierarchy
+ * 
+ * Why it matters:
+ * This is how USERS actually run the tool.
+ * If this test passes, the CLI works end-to-end.
+ * Library tests are great, but this tests the REAL interface.
+ * 
+ * What it validates:
+ * - Exit code is 0 (success)
+ * - No errors in stderr
+ * - json/ directory exists
+ * - tutors.json is valid JSON with correct structure
  */
 Deno.test("CLI Execution: tutors (JSON generation) on reference-course", async () => {
   const courseName = "reference-course";
@@ -63,7 +85,7 @@ Deno.test("CLI Execution: tutors (JSON generation) on reference-course", async (
     await createTempDir(courseDir);
     await copyDir(join(FIXTURES, courseName), courseDir);
     
-    // Execute: Run tutors CLI
+    // Execute: Run tutors CLI (as users do!)
     const cliPath = join(Deno.cwd(), "../tutors/main.ts");
     const result = await runCli(cliPath, courseDir);
     
